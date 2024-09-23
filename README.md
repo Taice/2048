@@ -4,7 +4,7 @@
 - move right
 - move up 
 - move down
-- spawns 2 random blocks (4 1/10 of the time, 2 the rest) at the end of each move
+- spawns 2 random blocks (a 4 1/10 of the time, 2 the rest) at the end of each move
 
 ## how to run
 ### dependencies
