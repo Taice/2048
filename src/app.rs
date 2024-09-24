@@ -38,13 +38,17 @@ impl App {
             return Ok(());
         }
         if let KeyCode::Char(ch) = key.code {
+            let mut spawn = true;
             match ch {
                 'q' => self.exit = true,
                 'h' => self.move_left(),
                 'j' => self.move_down(),
                 'k' => self.move_up(),
                 'l' => self.move_right(),
-                _ => (),
+                _ => spawn = false,
+            }
+            if spawn {
+                self.spawn();
             }
         }
         Ok(())
@@ -66,19 +70,15 @@ impl App {
         if indexes.is_empty() {
             return false;
         }
-        for x in 0..indexes.len() {
-            if x == 2 {
-                break;
-            }
-            let index = rand::thread_rng().gen_range(0..indexes.len());
-            let (r, c) = indexes.remove(index);
-            let num = if rand::thread_rng().gen_range(0..10) == 4 {
-                4
-            } else {
-                2
-            };
-            self.grid[r][c] = num;
-        }
+        let index = rand::thread_rng().gen_range(0..indexes.len());
+        let (r, c) = indexes.remove(index);
+        let num = if rand::thread_rng().gen_range(0..10) == 4 {
+            4
+        } else {
+            2
+        };
+        self.grid[r][c] = num;
+
         true
     }
 
@@ -120,7 +120,6 @@ impl App {
                 target += 1;
             }
         }
-        self.spawn();
     }
 
     fn move_right(&mut self) {
@@ -159,7 +158,6 @@ impl App {
                 }
             }
         }
-        self.spawn();
     }
 
     fn move_up(&mut self) {
@@ -200,7 +198,6 @@ impl App {
                 target += 1;
             }
         }
-        self.spawn();
     }
 
     fn move_down(&mut self) {
@@ -241,7 +238,6 @@ impl App {
                 target = target.saturating_sub(1);
             }
         }
-        self.spawn();
     }
 }
 
